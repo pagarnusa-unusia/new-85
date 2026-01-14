@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Materi Putih | PAGARNUSA UNUSIA</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1drM76LlU3sdqpwo-Urq7ZULoyORC0UMQ">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B7548',
+                        primaryDark: '#145c38',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        
+        /* Animasi Konten */
+        .materi-content { 
+            display: none; 
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-out;
+        }
+        .materi-content.active { 
+            display: block; 
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animasi Masuk Halaman */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-frame {
+            animation: fadeInScale 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-emerald-50 to-slate-50 min-h-screen flex flex-col">
+
+    <header class="bg-primary text-white shadow-lg p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="logopn.png" alt="Logo" class="h-8">
+                <span class="font-bold text-sm tracking-widest uppercase">Materi Sabuk Putih</span>
+            </div>
+            <a href="javascript:history.back()" class="text-xs bg-white/20 px-3 py-1 rounded-lg hover:bg-white/30 transition">
+                <i class="fas fa-arrow-left mr-1"></i> Kembali
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 container mx-auto max-w-lg px-4 py-8">
+         <div class="mb-8 text-center animate-frame">
+            <h1 class="text-2xl font-bold text-slate-800 uppercase text-shadow-sm">Strip Putih</h1>
+            <div class="inline-block px-4 py-1 rounded-full bg-white border border-slate-200 text-[10px] font-bold text-slate-500 mt-2 shadow-sm">
+                Ujian: Strip Putih (Santri)
+            </div>
+        </div>
+
+        <div class="grid gap-4">
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-frame" style="animation-delay: 0.1s;">
+                <button onclick="toggleMateri('hafalan')" class="w-full p-5 flex items-center justify-between hover:bg-slate-50 transition group">
+                    <div class="flex items-center space-x-4 text-left">
+                        <div class="bg-orange-50 text-orange-600 p-3 rounded-xl group-hover:scale-110 transition-transform"><i class="fas fa-brain text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Hafalan</h3>
+                            <p class="text-[10px] text-slate-500 uppercase font-medium">Doa & Surah Pendek</p>
+                        </div>
+                    </div>
+                    <i id="icon-hafalan" class="fas fa-chevron-down text-slate-300 transition-transform duration-300"></i>
+                </button>
+                <div id="hafalan" class="materi-content p-5 bg-orange-50/30 border-t border-slate-100">
+                    <ul class="text-xs space-y-3 text-slate-700">
+                        <li class="flex items-start"><i class="fas fa-check-circle text-orange-500 mt-0.5 mr-2"></i> Tahiat Akhir & Doa Qunut</li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-orange-500 mt-0.5 mr-2"></i> Surah: Quraisy, Al-Ma'un, Al-Kautsar</li>
+                        <li class="flex items-start"><i class="fas fa-check-circle text-orange-500 mt-0.5 mr-2"></i> Tahlil Awal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-frame" style="animation-delay: 0.2s;">
+                <button onclick="toggleMateri('sejarah')" class="w-full p-5 flex items-center justify-between hover:bg-slate-50 transition group">
+                    <div class="flex items-center space-x-4 text-left">
+                        <div class="bg-blue-50 text-blue-600 p-3 rounded-xl group-hover:scale-110 transition-transform"><i class="fas fa-history text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Sejarah</h3>
+                            <p class="text-[10px] text-slate-500 uppercase font-medium">Wawasan Organisasi</p>
+                        </div>
+                    </div>
+                    <i id="icon-sejarah" class="fas fa-chevron-down text-slate-300 transition-transform duration-300"></i>
+                </button>
+                <div id="sejarah" class="materi-content p-5 bg-blue-50/30 border-t border-slate-100">
+                    <div class="space-y-4 text-[11px] text-slate-700 leading-relaxed">
+                        <div>
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Sejarah PSNU Pagar Nusa</span>
+                    <div>
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Sejarah dan Fondasi Organisasi</span>
+                            <p class="mb-4 text-justify">
+                                <b>Pencak Silat Nahdlatul Ulama (PSNU) Pagar Nusa</b> merupakan badan otonom di bawah naungan <b>Nahdlatul Ulama</b> yang memiliki sejarah panjang. Organisasi ini resmi didirikan pada tanggal <b>03 Januari 1986 M</b>, yang bertepatan dengan <b>22 Rabiul Akhir 1406 H</b>. Lokasi bersejarah yang menjadi tempat berdirinya Pagar Nusa adalah <b>Pondok Pesantren Lirboyo</b> di Kediri, Jawa Timur.
+                            </p>
+                            <p class="mb-4 text-justify">
+                                Gagasan awal pembentukannya muncul dalam sebuah forum pertemuan yang mempertemukan para kiai dengan para pendekar silat lingkungan NU. Sementara itu, induk organisasinya, yaitu Nahdlatul Ulama, didirikan oleh <b>Hadratussyaikh KH. Hasyim Asy'ari</b> dengan pusat pergerakan awal di <b>Pondok Pesantren Tebuireng</b>, Jombang.
+                            </p>
+                        
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Tokoh Utama dan Kepemimpinan</span>
+                            <p class="mb-4 text-justify">
+                                Dalam perjalanannya, Pagar Nusa dibentuk dan dibesarkan oleh tokoh-tokoh besar. <b>KH. Abdullah Maksum Jauhari</b>, atau yang akrab disapa <b>Gus Maksum</b>, tercatat sebagai sosok inisiator utama sekaligus Ketua Umum pertama yang memimpin organisasi ini. Setelah masa kepemimpinan beliau, tongkat estafet Ketua Umum Pimpinan Pusat dilanjutkan oleh <b>Dr. KH. Suharbillah</b> sebagai ketua kedua.
+                            </p>
+                            <p class="mb-4 text-justify">
+                                Saat ini, organisasi dipimpin oleh <b>Muchamad Nabil Haroen (Gus Nabil)</b> sebagai Ketua Umum Pimpinan Pusat. Selain tokoh pimpinan, terdapat pula ulama yang memberikan kontribusi spiritual besar, seperti <b>KH. Syansuri Badawi</b> yang mencetuskan lafaz luhur <i>"La Gholiba Illa Billah"</i>, serta <b>KH. Ridwan Abdullah</b> yang berjasa besar sebagai pencipta logo Nahdlatul Ulama.
+                            </p>
+                        
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Filosofi, Simbol, dan Prinsip</span>
+                            <p class="mb-4 text-justify">
+                                Setiap elemen visual dalam Pagar Nusa memiliki makna filosofis yang mendalam. Logo Pagar Nusa menampilkan <b>tiga garis tepi</b> yang melambangkan prinsip <b>Iman, Islam, dan Ihsan</b>, serta simbol senjata <b>Trisula</b> yang memiliki arti tertentu dalam bela diri ini. Slogan utama organisasi, <b>"La Gholiba Illa Billah"</b>, mengandung arti bahwa tiada kemenangan tanpa adanya pertolongan dari Allah SWT.
+                            </p>
+                            <p class="mb-4 text-justify">
+                                Sebagai bagian dari NU, organisasi ini memegang teguh landasan teologis <b>Ahlussunnah wal Jama'ah An-Nahdliyah</b> dengan prinsip-prinsip moderat yang dikenal sebagai <b>Empat Pilar Kebangsaan</b>. Selain itu, aspek spiritualitas dalam pencak silat ini sangat ditekankan melalui praktik <b>olah batin</b> yang selaras dengan nilai-nilai Islam.
+                            </p>
+                        
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Wawasan Kebangsaan dan Keanggotaan</span>
+                            <p class="mb-4 text-justify">
+                                Sebagai organisasi yang menjunjung tinggi nasionalisme, pemahaman akan simbol negara sangatlah penting. Bangsa Indonesia memiliki semboyan <b>Bhinneka Tunggal Ika</b> dengan bendera <b>Merah Putih</b> yang dijahit oleh <b>Ibu Fatmawati Soekarno</b>. Lagu kebangsaan Indonesia Raya yang diciptakan oleh <b>W.R. Supratman</b> wajib dihormati dengan cara mengambil sikap sempurna dan berdiri tegak tanpa melakukan gerakan lain saat dikumandangkan.
+                            </p>
+                            <p class="text-justify">
+                                Dalam struktur keanggotaan Pagar Nusa sendiri, seseorang baru mendapatkan status resmi sebagai <b>anggota</b> setelah mereka dinyatakan lulus mengikuti seluruh rangkaian ujian <b>Didikan dan Kepelatihan (Diklat)</b> yang telah ditentukan.
+                            </p>
+                        </div>
+                        <hr class="border-blue-100">
+                        <div>
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Nahdlatul Ulama (NU)</span>
+                            <p class="text-justify">Didirikan pada <b>31 Januari 1926</b> oleh <b>Hadratussyaikh KH Hasyim Asy'ari</b> dan para ulama lainnya sebagai gerakan kebangkitan ulama. Pagar Nusa merupakan Badan Otonom (Banom) NU yang bertugas menggali, mengembangkan, dan melestarikan seni bela diri pencak silat sebagai warisan budaya nusantara yang bernafaskan Islam.</p>
+                        </div>
+                        <hr class="border-blue-100">
+                        <div>
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Wawasan Kebangsaan</span>
+                            <p class="text-justify">Nama "Pagar Nusa" bermakna <b>"Pagar NU dan Bangsa"</b>. Hal ini melambangkan tugas pokok setiap anggota: membentengi para ulama, menjaga kedaulatan Negara Kesatuan Republik Indonesia (NKRI), dan menjunjung tinggi nilai-nilai nasionalisme berdasarkan Pancasila dan UUD 1945.</p>
+                        </div>
+                        <hr class="border-blue-100">
+                        <div>
+                            <span class="font-bold text-blue-700 uppercase block mb-1">Ahlussunnah wal Jama'ah (ASWAJA)</span>
+                            <p class="text-justify">Pagar Nusa berazaskan Islam <b>Ahlussunnah wal Jama'ah</b> dengan manhaj berfikir: <i>Tawassuth</i> (moderat), <i>Tawazun</i> (seimbang), <i>I'tidal</i> (adil), dan <i>Tasamuh</i> (toleran). Bela diri ini bukan sekadar kekuatan fisik, melainkan sarana dakwah dan pembentukan akhlak mulia sesuai ajaran para ulama.</p>
+                        </div>
+                        <div class="mt-4 p-3 bg-white rounded-lg border border-blue-100 italic text-center text-[10px] text-slate-500 shadow-sm">
+                            "Materi di atas merangkum garis besar perjalanan sejarah, struktur organisasi, serta landasan ideologi PSNU Pagar Nusa dari masa pembentukan hingga menjadi Badan Otonom."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-frame" style="animation-delay: 0.3s;">
+                <button onclick="toggleMateri('teknik')" class="w-full p-5 flex items-center justify-between hover:bg-slate-50 transition group">
+                    <div class="flex items-center space-x-4 text-left">
+                        <div class="bg-emerald-50 text-emerald-600 p-3 rounded-xl group-hover:scale-110 transition-transform"><i class="fas fa-user-ninja text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Senaman & Teknik</h3>
+                            <p class="text-[10px] text-slate-500 uppercase font-medium">Gerakan Dasar & Praktik</p>
+                        </div>
+                    </div>
+                    <i id="icon-teknik" class="fas fa-chevron-down text-slate-300 transition-transform duration-300"></i>
+                </button>
+                <div id="teknik" class="materi-content p-5 bg-emerald-50/30 border-t border-slate-100">
+                    <div class="space-y-4">
+                        <div>
+                            <span class="text-[10px] font-bold text-emerald-700 uppercase">Kuda-Kuda & Langkah</span>
+                            <p class="text-[11px] text-slate-600 italic">Tempur, Sejajar, Ganti Kuda-kuda, Salam PAGARNUSA, Salam NU, Senaman TK</p>
+                        </div>
+                        <hr class="border-emerald-100">
+                        <div>
+                            <span class="text-[10px] font-bold text-emerald-700 uppercase">Serangan & Tangkisan</span>
+                            <p class="text-[11px] text-slate-600"><b>Pukulan:</b> Jab, Bandol (Atas/Bawah), Uppercut, Sotok, Tongkok, Gebang, Parang.</p>
+                            <p class="text-[11px] text-slate-600 mt-1"><b>Tendangan:</b> A,B,C,T,Sabit, Sirkel Atas dan Bawah.</p>
+                            <p class="text-[11px] text-slate-600 mt-1"><b>Tangkisan:</b> Atas, Luar, Dalam, Tangkisan Kepala.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-frame" style="animation-delay: 0.4s;">
+                <button onclick="toggleMateri('fisik')" class="w-full p-5 flex items-center justify-between hover:bg-slate-50 transition group">
+                    <div class="flex items-center space-x-4 text-left">
+                        <div class="bg-red-50 text-red-600 p-3 rounded-xl group-hover:scale-110 transition-transform"><i class="fas fa-running text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Fisik</h3>
+                            <p class="text-[10px] text-slate-500 uppercase font-medium">Tes Ketahanan Tubuh</p>
+                        </div>
+                    </div>
+                    <i id="icon-fisik" class="fas fa-chevron-down text-slate-300 transition-transform duration-300"></i>
+                </button>
+                <div id="fisik" class="materi-content p-5 bg-red-50/30 border-t border-slate-100">
+                    <div class="grid grid-cols-2 gap-3 text-[11px] text-slate-700">
+                        <div class="bg-white p-2 rounded-lg shadow-sm border border-slate-100"><i class="fas fa-dot-circle mr-1 text-red-400"></i> Push Up & Sit Up</div>
+                        <div class="bg-white p-2 rounded-lg shadow-sm border border-slate-100"><i class="fas fa-dot-circle mr-1 text-red-400"></i> Spir Perut & Paha</div>
+                        <div class="bg-white p-2 rounded-lg shadow-sm border border-slate-100"><i class="fas fa-dot-circle mr-1 text-red-400"></i> Tendangan A,B,C,T,Sabit</div>
+                        <div class="bg-white p-2 rounded-lg shadow-sm border border-slate-100"><i class="fas fa-dot-circle mr-1 text-red-400"></i> Plank Standart</div>
+                        <div class="bg-white p-2 rounded-lg shadow-sm border border-slate-100"><i class="fas fa-dot-circle mr-1 text-red-400"></i> Loncat, Lari, Rol, Skip</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden animate-frame" style="animation-delay: 0.5s;">
+                <button onclick="toggleMateri('mental')" class="w-full p-5 flex items-center justify-between hover:bg-slate-50 transition group">
+                    <div class="flex items-center space-x-4 text-left">
+                        <div class="bg-purple-50 text-purple-600 p-3 rounded-xl group-hover:scale-110 transition-transform"><i class="fas fa-heart text-xl"></i></div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Mental</h3>
+                            <p class="text-[10px] text-slate-500 uppercase font-medium leading-relaxed">Sparing (ketahanan emosional, kepercayaan diri, dan ketenangan)</p>
+                        </div>
+                    </div>
+                    <i id="icon-mental" class="fas fa-chevron-down text-slate-300 transition-transform duration-300"></i>
+                </button>
+                <div id="mental" class="materi-content p-5 bg-purple-50/30 border-t border-slate-100">
+                    <ul class="text-xs space-y-2 text-slate-700">
+                        <li class="flex items-center bg-white p-2 rounded-lg shadow-sm border border-slate-100"><i class="fas fa-bolt text-purple-500 mr-2"></i> Lompat Harimau</li>
+                        <li class="flex items-center bg-white p-2 rounded-lg shadow-sm border border-slate-100"><i class="fas fa-shield-alt text-purple-500 mr-2"></i> Sparing Teknikan</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-8 p-4 bg-emerald-600 rounded-2xl text-white shadow-lg flex items-center space-x-4 animate-frame" style="animation-delay: 0.6s;">
+            <div class="text-3xl opacity-50"><i class="fas fa-quote-left"></i></div>
+            <p class="text-[10px] italic leading-relaxed">
+                "Janganlah engkau menjadi pesilat yang hanya pandai dalam jurus, tetapi kosong dalam doa dan akhlak."
+            </p>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-6 text-slate-400 text-[10px]">
+        © 2025 PAGARNUSA UNUSIA. Pusat Belajar Digital.
+    </footer>
+
+    <script>
+        function toggleMateri(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            content.classList.toggle('active');
+            
+            if(content.classList.contains('active')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUserProfile'));
+            if (!currentUser) {
+                window.location.href = 'ukt/login.html';
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+

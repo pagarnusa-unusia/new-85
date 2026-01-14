@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konfirmasi Pembayaran | PAGARNUSA UNUSIA</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1drM76LlU3sdqpwo-Urq7ZULoyORC0UMQ ">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B7548',
+                        primaryDark: '#145c38',
+                        whatsapp: '#25D366'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-emerald-50 to-slate-50 min-h-screen flex flex-col">
+
+    <header class="bg-primary text-white shadow-lg p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="../logopn.png" alt="Logo" class="h-8">
+                <span class="font-bold text-sm tracking-widest uppercase">Pembayaran</span>
+            </div>
+            <a href="profil_siswa.html" class="text-xs bg-white/20 px-3 py-1 rounded-lg hover:bg-white/30 transition">
+                <i class="fas fa-arrow-left mr-1"></i> Kembali
+            </a>
+        </div>
+    </header>
+
+    <main class="flex-1 container mx-auto max-w-lg px-4 py-10">
+        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-emerald-100">
+            <div class="bg-primary p-6 text-white text-center">
+                <i class="fas fa-receipt text-4xl mb-3 opacity-80"></i>
+                <h2 class="text-xl font-bold">Konfirmasi Pembayaran</h2>
+                <p class="text-xs opacity-70">UKT IV Pagar Nusa UNUSIA</p>
+            </div>
+
+            <form id="paymentForm" class="p-8 space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nama Lengkap</label>
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-3 top-3 text-slate-400"></i>
+                        <input type="text" id="nama-otomatis" readonly
+                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-10 py-3 text-sm font-semibold text-slate-700 focus:outline-none cursor-not-allowed">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Metode Bayar</label>
+                    <select id="status-bayar" class="w-full border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:outline-none transition">
+                        <option value="Lunas">Lunas (Rp. 100.000)</option>
+                        <option value="Cicil">Cicil / DP</option>
+                    </select>
+                </div>
+
+                <div id="cicilan-container" class="hidden animate-slide-up">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nominal Cicilan</label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3 text-sm font-bold text-slate-400">Rp</span>
+                        <input type="number" id="nominal-cicil" placeholder="Contoh: 50000"
+                            class="w-full border border-slate-300 rounded-xl px-12 py-3 text-sm focus:ring-2 focus:ring-primary focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-whatsapp hover:bg-green-600 text-white font-bold py-4 rounded-xl shadow-lg transition transform hover:scale-[1.02] flex items-center justify-center space-x-3">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        <span>Kirim Konfirmasi via WA</span>
+                    </button>
+                    <p class="text-[10px] text-center text-slate-400 mt-4 italic">
+                        *Anda akan diarahkan ke WhatsApp untuk mengirim bukti transfer.
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-8 bg-emerald-900 text-white p-6 rounded-2xl shadow-lg relative overflow-hidden">
+            <i class="fas fa-university absolute -right-4 -bottom-4 text-8xl opacity-10"></i>
+            <h3 class="text-sm font-bold mb-4 flex items-center">
+                <i class="fas fa-info-circle mr-2 text-yellow-400"></i> Tujuan Transfer
+            </h3>
+            <div class="space-y-2">
+                <p class="text-xs opacity-80">Sea Bank (535)</p>
+                <p class="text-lg font-mono font-bold tracking-wider">9017 0194 3895</p>
+                <p class="text-xs font-medium">A.n Kaniska</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-6 text-slate-400 text-[10px]">
+        © 2025 PAGARNUSA UNUSIA. Sistem Pendaftaran UKT.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Ambil Nama dari Sesi Login
+            const currentUser = JSON.parse(localStorage.getItem('currentUserProfile'));
+            
+            // Proteksi: Jika tidak login, kembalikan ke login
+            if (!currentUser) {
+                window.location.href = 'ukt/login.html';
+                return;
+            }
+
+            // Masukkan nama ke input secara otomatis
+            document.getElementById('nama-otomatis').value = currentUser.nama;
+
+            // 2. Logika Tampilan Cicilan
+            const selectBayar = document.getElementById('status-bayar');
+            const cicilanContainer = document.getElementById('cicilan-container');
+
+            selectBayar.addEventListener('change', () => {
+                if (selectBayar.value === 'Cicil') {
+                    cicilanContainer.classList.remove('hidden');
+                } else {
+                    cicilanContainer.classList.add('hidden');
+                }
+            });
+
+            // 3. Logika Kirim Pesan WhatsApp
+            const paymentForm = document.getElementById('paymentForm');
+            paymentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const nama = document.getElementById('nama-otomatis').value.toUpperCase();
+                const status = selectBayar.value;
+                const nominalCicil = document.getElementById('nominal-cicil').value;
+
+                let jumlahBayarText = "Rᴘ. 100.000 (Lᴜɴᴀs)";
+                
+                if (status === "Cicil") {
+                    if (!nominalCicil) {
+                        alert("Silakan masukkan nominal cicilan Anda.");
+                        return;
+                    }
+                    jumlahBayarText = "Rᴘ. " + parseInt(nominalCicil).toLocaleString('id-ID') + " (Cɪᴄɪʟ)";
+                }
+
+                // Pengaturan Nomor Admin (Ganti sesuai nomor bendahara Anda)
+                const nomorWA = "6285707195371"; 
+
+                // Draft Pesan dengan font Small Caps agar estetis
+                const pesan = `Assᴀʟᴀᴍᴜᴀʟᴀɪᴋᴜᴍ Mʙᴀᴋ,\r\nMᴏʜᴏɴ Iᴢɪɴ Kᴏɴꜰɪʀᴍᴀsɪ PᴇᴍʙAYARAN:\r\n\r\n📌 Nᴀᴍᴀ : ${nama}\r\n📌 Jᴜᴍʟᴀʜ : ${jumlahBayarText}\r\n📌 KᴇᴛᴇRᴀɴɢᴀɴ : Uᴊɪᴀɴ Kᴇɴᴀɪᴋᴀɴ Tɪɴɢᴋᴀᴛ IV\r\n\r\nSᴇʙᴀɢᴀɪ *PᴇsᴇRᴛᴀ Uᴊɪᴀɴ Kᴇɴᴀɪᴋᴀɴ Tɪɴɢᴋᴀᴛ IV* PSNU Pᴀɢᴀʀɴᴜsᴀ UNUSIA`;
+
+                // URL Encode untuk link WhatsApp
+                const linkWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+                
+                // Buka di tab baru
+                window.open(linkWA, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FINAL EVALUASI UKT IV - PAGARNUSA UNUSIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B7548',
+                        primaryDark: '#145c38'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .rating-input:checked + label {
+            background-color: #1B7548;
+            color: white;
+            border-color: #1B7548;
+            transform: scale(1.05);
+        }
+        .disabled-form { pointer-events: none; opacity: 0.5; filter: grayscale(1); }
+        textarea { resize: none; }
+    </style>
+</head>
+<body class="min-h-screen bg-emerald-50/30 text-slate-800 pb-12">
+
+    <header class="sticky top-0 z-50 bg-primary text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <img src="../logopn.png" alt="Logo" class="h-10 bg-white rounded-full p-1">
+                <h1 class="text-xs md:text-sm font-bold leading-tight uppercase">PAGARNUSA<br>UNUSIA</h1>
+            </div>
+            <div class="text-right">
+                <span class="text-[9px] bg-white/20 px-2 py-1 rounded tracking-widest uppercase block mb-1">Evaluasi UKT IV</span>
+                <span id="deadlineTimer" class="text-[10px] font-mono text-yellow-300 font-bold"></span>
+            </div>
+        </div>
+    </header>
+
+    <main class="w-full max-w-3xl mx-auto px-4 py-8">
+        
+        <div id="expiredMsg" class="hidden bg-white border-4 border-red-500 p-8 rounded-[2rem] mb-8 text-center shadow-2xl">
+            <i class="fas fa-calendar-times text-red-500 text-5xl mb-4"></i>
+            <h3 class="text-2xl font-black text-slate-800 uppercase">Akses Ditutup!</h3>
+            <p class="text-slate-600 mt-2">Batas pengisian evaluasi telah berakhir pada tanggal yang ditentukan.</p>
+        </div>
+
+        <section id="mainContent" class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-emerald-100">
+            <div class="bg-primary p-8 md:p-12 text-center text-white relative">
+                <div class="absolute top-4 right-4 opacity-10"><i class="fas fa-leaf text-6xl"></i></div>
+                <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Kuesioner</h2>
+                <p class="text-emerald-100 text-xs mt-2 italic">Isilah dengan jujur demi kemajuan PSNU PAGARNUSA UNUSIA.<br>Kuesioner ini adalah salah satu absensi kehadiran minggu ini setalah UKT</p>
+            </div>
+
+            <div class="bg-emerald-50 p-6 border-b border-emerald-100">
+                <div class="flex justify-between text-[10px] font-bold text-primary uppercase mb-4 px-2">
+                    <span>1: Sangat Kurang</span>
+                    <span>5: Sangat Baik</span>
+                </div>
+                <div class="grid grid-cols-5 gap-2">
+                    <div class="h-1 bg-red-400 rounded"></div>
+                    <div class="h-1 bg-orange-400 rounded"></div>
+                    <div class="h-1 bg-yellow-400 rounded"></div>
+                    <div class="h-1 bg-emerald-400 rounded"></div>
+                    <div class="h-1 bg-primary rounded"></div>
+                </div>
+            </div>
+
+            <form id="evaluationForm" class="p-6 md:p-10 space-y-12">
+                
+                <div class="space-y-6">
+                    <h3 class="flex items-center text-lg font-bold text-primary border-b-2 border-emerald-100 pb-2 uppercase tracking-tighter">
+                        <i class="fas fa-user-shield mr-2"></i> Data Peserta
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-2 uppercase">Nama Lengkap *</label>
+                            <input type="text" name="peserta_nama" required placeholder="Ketik nama Anda..."
+                                class="w-full rounded-xl border-2 border-slate-100 bg-slate-50 px-4 py-3 text-sm focus:border-primary focus:bg-white outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-2 uppercase">Email Aktif *</label>
+                            <input type="email" name="peserta_email" required placeholder="alamat@email.com"
+                                class="w-full rounded-xl border-2 border-slate-100 bg-slate-50 px-4 py-3 text-sm focus:border-primary focus:bg-white outline-none transition-all">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <h3 class="flex items-center text-lg font-bold text-primary border-b-2 border-emerald-100 pb-2 uppercase tracking-tighter">
+                        <i class="fas fa-clipboard-check mr-2"></i> Evaluasi Kinerja Panitia
+                    </h3>
+                    <div class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 space-y-4">
+                        <label class="text-sm font-black text-primary uppercase">Kinerja Panitia Pelaksana</label>
+                        <div class="flex gap-2">
+                            <input type="radio" name="rate_panitia" value="1" id="rp_1" class="hidden rating-input" required><label for="rp_1" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">1</label>
+                            <input type="radio" name="rate_panitia" value="2" id="rp_2" class="hidden rating-input"><label for="rp_2" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">2</label>
+                            <input type="radio" name="rate_panitia" value="3" id="rp_3" class="hidden rating-input"><label for="rp_3" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">3</label>
+                            <input type="radio" name="rate_panitia" value="4" id="rp_4" class="hidden rating-input"><label for="rp_4" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">4</label>
+                            <input type="radio" name="rate_panitia" value="5" id="rp_5" class="hidden rating-input"><label for="rp_5" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">5</label>
+                        </div>
+                        <textarea name="feedback_panitia" rows="3" placeholder="Kritik & saran untuk panitia (Minimal 10 kata)..."
+                            class="feedback-input w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary outline-none transition-all"></textarea>
+                        <div class="flex justify-end text-[10px] font-bold counter-label text-slate-400">
+                            <span class="word-count">0</span>&nbsp;/ 10 Kata
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <h3 class="flex items-center text-lg font-bold text-primary border-b-2 border-emerald-100 pb-2 uppercase tracking-tighter">
+                        <i class="fas fa-file-alt mr-2"></i> Evaluasi Pos Penguji
+                    </h3>
+
+                    <div class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 space-y-4">
+                        <label class="text-sm font-black text-primary uppercase">POS 1: Pemberangkatan</label>
+                        <div class="flex gap-2">
+                            <input type="radio" name="rate_pos1" value="1" id="r1_1" class="hidden rating-input" required><label for="r1_1" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">1</label>
+                            <input type="radio" name="rate_pos1" value="2" id="r1_2" class="hidden rating-input"><label for="r1_2" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">2</label>
+                            <input type="radio" name="rate_pos1" value="3" id="r1_3" class="hidden rating-input"><label for="r1_3" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">3</label>
+                            <input type="radio" name="rate_pos1" value="4" id="r1_4" class="hidden rating-input"><label for="r1_4" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">4</label>
+                            <input type="radio" name="rate_pos1" value="5" id="r1_5" class="hidden rating-input"><label for="r1_5" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">5</label>
+                        </div>
+                        <textarea name="feedback_pemberangkatan" rows="3" placeholder="Kritik & saran pos 1 (Minimal 10 kata)..."
+                            class="feedback-input w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary outline-none transition-all"></textarea>
+                        <div class="flex justify-end text-[10px] font-bold counter-label text-slate-400">
+                            <span class="word-count">0</span>&nbsp;/ 10 Kata
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 space-y-4">
+                        <label class="text-sm font-black text-primary uppercase">POS 2: Sejarah</label>
+                        <div class="flex gap-2">
+                            <input type="radio" name="rate_pos2" value="1" id="r2_1" class="hidden rating-input" required><label for="r2_1" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">1</label>
+                            <input type="radio" name="rate_pos2" value="2" id="r2_2" class="hidden rating-input"><label for="r2_2" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">2</label>
+                            <input type="radio" name="rate_pos2" value="3" id="r2_3" class="hidden rating-input"><label for="r2_3" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">3</label>
+                            <input type="radio" name="rate_pos2" value="4" id="r2_4" class="hidden rating-input"><label for="r2_4" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">4</label>
+                            <input type="radio" name="rate_pos2" value="5" id="r2_5" class="hidden rating-input"><label for="r2_5" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">5</label>
+                        </div>
+                        <textarea name="feedback_sejarah" rows="3" placeholder="Kritik & saran pos 2 (Minimal 10 kata)..."
+                            class="feedback-input w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary outline-none transition-all"></textarea>
+                        <div class="flex justify-end text-[10px] font-bold counter-label text-slate-400">
+                            <span class="word-count">0</span>&nbsp;/ 10 Kata
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 space-y-4">
+                        <label class="text-sm font-black text-primary uppercase">POS 3: Senaman & Teknik</label>
+                        <div class="flex gap-2">
+                            <input type="radio" name="rate_pos3" value="1" id="r3_1" class="hidden rating-input" required><label for="r3_1" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">1</label>
+                            <input type="radio" name="rate_pos3" value="2" id="r3_2" class="hidden rating-input"><label for="r3_2" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">2</label>
+                            <input type="radio" name="rate_pos3" value="3" id="r3_3" class="hidden rating-input"><label for="r3_3" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">3</label>
+                            <input type="radio" name="rate_pos3" value="4" id="r3_4" class="hidden rating-input"><label for="r3_4" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">4</label>
+                            <input type="radio" name="rate_pos3" value="5" id="r3_5" class="hidden rating-input"><label for="r3_5" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">5</label>
+                        </div>
+                        <textarea name="feedback_senaman" rows="3" placeholder="Kritik & saran pos 3 (Minimal 10 kata)..."
+                            class="feedback-input w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary outline-none transition-all"></textarea>
+                        <div class="flex justify-end text-[10px] font-bold counter-label text-slate-400">
+                            <span class="word-count">0</span>&nbsp;/ 10 Kata
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 space-y-4">
+                        <label class="text-sm font-black text-primary uppercase">POS 4: Fisik</label>
+                        <div class="flex gap-2">
+                            <input type="radio" name="rate_pos4" value="1" id="r4_1" class="hidden rating-input" required><label for="r4_1" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">1</label>
+                            <input type="radio" name="rate_pos4" value="2" id="r4_2" class="hidden rating-input"><label for="r4_2" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">2</label>
+                            <input type="radio" name="rate_pos4" value="3" id="r4_3" class="hidden rating-input"><label for="r4_3" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">3</label>
+                            <input type="radio" name="rate_pos4" value="4" id="r4_4" class="hidden rating-input"><label for="r4_4" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">4</label>
+                            <input type="radio" name="rate_pos4" value="5" id="r4_5" class="hidden rating-input"><label for="r4_5" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">5</label>
+                        </div>
+                        <textarea name="feedback_fisik" rows="3" placeholder="Kritik & saran pos 4 (Minimal 10 kata)..."
+                            class="feedback-input w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary outline-none transition-all"></textarea>
+                        <div class="flex justify-end text-[10px] font-bold counter-label text-slate-400">
+                            <span class="word-count">0</span>&nbsp;/ 10 Kata
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-[2rem] border border-slate-100 space-y-4">
+                        <label class="text-sm font-black text-primary uppercase">POS 5: Mental</label>
+                        <div class="flex gap-2">
+                            <input type="radio" name="rate_pos5" value="1" id="r5_1" class="hidden rating-input" required><label for="r5_1" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">1</label>
+                            <input type="radio" name="rate_pos5" value="2" id="r5_2" class="hidden rating-input"><label for="r5_2" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">2</label>
+                            <input type="radio" name="rate_pos5" value="3" id="r5_3" class="hidden rating-input"><label for="r5_3" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">3</label>
+                            <input type="radio" name="rate_pos5" value="4" id="r5_4" class="hidden rating-input"><label for="r5_4" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">4</label>
+                            <input type="radio" name="rate_pos5" value="5" id="r5_5" class="hidden rating-input"><label for="r5_5" class="flex-1 text-center border-2 py-2 rounded-xl cursor-pointer font-bold bg-white text-sm">5</label>
+                        </div>
+                        <textarea name="feedback_mental" rows="3" placeholder="Kritik & saran pos 5 (Minimal 10 kata)..."
+                            class="feedback-input w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 text-sm focus:border-primary outline-none transition-all"></textarea>
+                        <div class="flex justify-end text-[10px] font-bold counter-label text-slate-400">
+                            <span class="word-count">0</span>&nbsp;/ 10 Kata
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <button type="submit" id="submitBtn" disabled class="w-full bg-slate-300 text-white font-black py-5 rounded-[2rem] transition-all flex items-center justify-center space-x-3 text-xl shadow-xl cursor-not-allowed group">
+                        <span>Kirim Laporan Evaluasi</span>
+                        <i class="fas fa-paper-plane group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform"></i>
+                    </button>
+                    <p class="text-center text-[10px] text-slate-400 mt-4 uppercase tracking-widest font-bold">Pastikan semua kolom terisi minimal 10 kata</p>
+                </div>
+            </form>
+        </section>
+    </main>
+
+<script>
+    // --- KONFIGURASI ---
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwae2He5Q_vxIAk7eIuuM34k6LuIpc7yTTSrbuX2qGTWxmbt7NECUxK-Z3NlMyvIn5HkQ/exec'; 
+    const DEADLINE_TARGET = new Date("2026-01-13T23:59:59").getTime();
+    const MIN_WORDS = 10;
+
+    const form = document.getElementById('evaluationForm');
+    const textareas = document.querySelectorAll('.feedback-input');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function checkDeadline() {
+        const now = new Date().getTime();
+        const distance = DEADLINE_TARGET - now;
+
+        if (distance < 0) {
+            const timerEl = document.getElementById('deadlineTimer');
+            if(timerEl) timerEl.innerText = "WAKTU HABIS (CLOSED)";
+            document.getElementById('mainContent').classList.add('disabled-form');
+            document.getElementById('expiredMsg').classList.remove('hidden');
+            
+            submitBtn.disabled = true;
+            submitBtn.classList.replace('bg-primary', 'bg-red-600');
+            submitBtn.innerText = "KUESIONER DITUTUP";
+            return true;
+        }
+
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        const timerEl = document.getElementById('deadlineTimer');
+        if(timerEl) timerEl.innerText = `SISA WAKTU: ${h}j ${m}m ${s}d`;
+        return false;
+    }
+
+    function validateForm() {
+        if (checkDeadline()) return;
+
+        let allTextareasValid = true;
+
+        textareas.forEach(ta => {
+            const text = ta.value.trim();
+            const wordCount = text === "" ? 0 : text.split(/\s+/).filter(w => w.length > 0).length;
+            
+            const posContainer = ta.closest('.bg-slate-50') || ta.parentElement;
+            const counterDisplay = posContainer.querySelector('.word-count');
+            const labelDisplay = posContainer.querySelector('.counter-label');
+
+            if (counterDisplay) counterDisplay.innerText = wordCount;
+
+            if (wordCount < MIN_WORDS) {
+                if (labelDisplay) {
+                    labelDisplay.classList.add('text-red-500');
+                    labelDisplay.classList.remove('text-primary');
+                }
+                allTextareasValid = false;
+            } else {
+                if (labelDisplay) {
+                    labelDisplay.classList.add('text-primary');
+                    labelDisplay.classList.remove('text-red-500');
+                }
+            }
+        });
+
+        const hasName = form.peserta_nama.value.trim().length >= 3;
+        const hasEmail = form.peserta_email.value.includes('@');
+        
+        // Cek semua grup radio
+        const radioGroups = ['rate_panitia', 'rate_pos1', 'rate_pos2', 'rate_pos3', 'rate_pos4', 'rate_pos5'];
+        const allRadiosChecked = radioGroups.every(name => form.querySelector(`input[name="${name}"]:checked`));
+
+        if (allTextareasValid && hasName && hasEmail && allRadiosChecked) {
+            submitBtn.disabled = false;
+            submitBtn.classList.replace('bg-slate-300', 'bg-primary');
+            submitBtn.classList.replace('cursor-not-allowed', 'cursor-pointer');
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.classList.replace('bg-primary', 'bg-slate-300');
+            submitBtn.classList.replace('cursor-pointer', 'cursor-not-allowed');
+        }
+    }
+
+    textareas.forEach(ta => {
+        ta.addEventListener('input', validateForm);
+        ta.addEventListener('paste', e => {
+            e.preventDefault();
+            alert("Silahkan diketik manual.");
+        });
+        ta.addEventListener('contextmenu', e => e.preventDefault());
+    });
+
+// 4. Submit Handler (DIPERBAIKI DENGAN REDIRECT)
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if(checkDeadline()) return;
+
+        submitBtn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> <span>MENGIRIM...</span>`;
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        const data = new URLSearchParams(formData);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: data,
+            mode: 'no-cors' 
+        })
+        .then(() => {
+            alert("ALHAMDULILLAH! Data evaluasi Anda telah berhasil kami terima.");
+            
+            // --- BAGIAN YANG DITAMBAHKAN: REDIRECT ---
+            window.location.href = "https://uktpagarnusa.my.id";
+            // ----------------------------------------
+
+            form.reset();
+            validateForm();
+            submitBtn.innerHTML = `<span>Kirim Laporan Evaluasi</span> <i class="fas fa-paper-plane"></i>`;
+        })
+        .catch(error => {
+            alert("Terjadi gangguan koneksi. Coba lagi.");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>Kirim Laporan Evaluasi</span> <i class="fas fa-paper-plane"></i>`;
+        });
+    });
+
+    // --- TAMBAHKAN INI AGAR WAKTU BERJALAN ---
+    setInterval(checkDeadline, 1000);
+    checkDeadline();
+    validateForm();
+</script>
+</body>
+</html>
+

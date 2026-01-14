@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rapat Panitia UKT | PAGARNUSA UNUSIA</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1drM76LlU3sdqpwo-Urq7ZULoyORC0UMQ">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B7548',
+                        primaryDark: '#145c38',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'spin-slow': 'spin 2s linear infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Loading Spinner Custom */
+        .loader {
+            border-top-color: #1B7548;
+            animation: spinner 0.6s linear infinite;
+        }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Unique Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+        /* Animasi Muter untuk Preloader */
+        .spinning-loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3; /* Warna dasar abu-abu terang */
+            border-top: 5px solid #1B7548; /* Warna hijau primary */
+            border-radius: 50%;
+            animation: spin-loading 1s linear infinite;
+        }
+
+        @keyframes spin-loading {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 via-slate-50 to-emerald-100 min-h-screen flex flex-col">
+
+<div id="preloader">
+    <div class="spinning-loader"></div>
+    <p class="mt-6 text-primary font-bold text-sm tracking-widest animate-pulse">
+        Menyiapkan Rapat...
+    </p>
+</div>
+
+    <header id="main-header" class="sticky top-0 z-50 bg-primary text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <div class="flex items-center space-x-3">
+                <img src="../logopn.png" alt="Logo PAGARNUSA" class="h-10 drop-shadow-md">
+                <h1 class="text-sm font-bold tracking-wide leading-tight uppercase">
+                    PAGARNUSA<br>UNUSIA
+                </h1>
+            </div>
+            
+            <a href="index.html" class="flex items-center space-x-2 bg-primaryDark/50 hover:bg-primaryDark px-4 py-2 rounded-xl transition-all duration-300 border border-white/10 group">
+                <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+                <span class="text-sm font-medium">Menu Utama</span>
+            </a>
+            
+        </div>
+    </header>
+
+    <main class="flex-1 container mx-auto flex flex-col items-center justify-center px-4 py-10">
+        
+        <div class="glass-card w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-emerald-100 animate-fade-in-up">
+            
+            <div class="bg-primary p-8 text-white text-center relative">
+                <div class="relative z-10">
+                    <img src="https://lh3.googleusercontent.com/d/1g1NjDH47x1l7CmOSlCwk9eJ_K2DZCCKY" alt="Google Meet Logo" class="h-10 mx-auto mb-2 drop-shadow-sm">
+                    <h2 class="text-xl font-bold">Gabung Rapat</h2>
+                    <p class="text-xs opacity-80 mt-1 uppercase tracking-widest">Panitia Ujian Kenaikan Tingkat IV</p>
+                </div>
+            </div>
+
+            <div class="p-6 md:p-8 space-y-6">
+                <div id="captchaBox" class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-5 flex items-center justify-between transition-all duration-300 relative overflow-hidden">
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="relative w-6 h-6 flex items-center justify-center">
+                            <input type="checkbox" id="robotCheck" 
+                                class="w-6 h-6 rounded border-2 border-slate-300 text-primary focus:ring-primary cursor-pointer appearance-none checked:hidden transition-all">
+                            
+                            <div id="loadingCircle" class="hidden w-6 h-6 border-2 border-slate-200 border-t-primary rounded-full animate-spin"></div>
+                            
+                            <i id="checkIcon" class="hidden fas fa-check-circle text-primary text-xl"></i>
+                        </div>
+                        
+                        <label id="captchaLabel" for="robotCheck" class="text-sm font-semibold text-slate-700 cursor-pointer select-none">
+                            Verifikasi Panitia
+                        </label>
+                    </div>
+
+                    <div class="flex flex-col items-end opacity-40">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/RecaptchaLogo.svg/1200px-RecaptchaLogo.svg.png" 
+                             alt="reCAPTCHA" class="h-8">
+                        <span class="text-[8px] uppercase font-bold tracking-tighter">Privacy & Terms</span>
+                    </div>
+                </div>
+
+                <div id="redirectSection" class="hidden animate-fade-in-up mt-4">
+                    <button onclick="redirectToMeet()" class="w-full bg-primary hover:bg-primaryDark text-white font-bold py-4 rounded-2xl shadow-lg transition-all transform hover:scale-[1.02] active:scale-95 flex items-center justify-center space-x-3">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Gabung</span>
+                    </button>
+                    <p class="text-[10px] text-center text-slate-400 mt-4 italic">
+                        klik tombol diatas untuk bergabung.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <p class="mt-8 text-slate-400 text-[10px]  tracking-widest">
+            Mengetahui, Panitia UKT UNUSIA IV
+        </p>
+    </main>
+    <footer class="bg-primary text-white text-center py-3 mt-auto">
+        <p class="text-xs opacity-90">© 2025 PAGARNUSA UNUSIA. Semua hak cipta dilindungi.</p>
+    </footer>
+
+    <script>
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+            }, 3000); // Durasi 2 detik sesuai permintaan
+        });
+
+        const robotCheck = document.getElementById('robotCheck');
+        const loadingCircle = document.getElementById('loadingCircle');
+        const checkIcon = document.getElementById('checkIcon');
+        const captchaLabel = document.getElementById('captchaLabel');
+        const captchaBox = document.getElementById('captchaBox');
+        const redirectSection = document.getElementById('redirectSection');
+        const meetUrl = "https://meet.google.com/hxm-kger-jgs";
+
+        robotCheck.addEventListener('change', function() {
+            if (this.checked) {
+                this.classList.add('hidden');
+                loadingCircle.classList.remove('hidden');
+                captchaLabel.innerText = "Memverifikasi...";
+                captchaLabel.classList.add('text-slate-400', 'italic');
+                captchaBox.classList.add('border-primary/20');
+
+                setTimeout(() => {
+                    loadingCircle.classList.add('hidden');
+                    checkIcon.classList.remove('hidden');
+                    
+                    captchaLabel.innerText = "Verifikasi Berhasil";
+                    captchaLabel.classList.remove('text-slate-400', 'italic');
+                    captchaLabel.classList.add('text-primary');
+                    captchaBox.classList.add('bg-emerald-50', 'border-primary/40');
+
+                    setTimeout(() => {
+                        redirectSection.classList.remove('hidden');
+                    }, 300);
+
+                }, 3000);
+            }
+        });
+
+        function redirectToMeet() {
+            const btn = document.querySelector('#redirectSection button');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> <span>Mengarahkan...</span>';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                window.location.href = meetUrl;
+            }, 500);
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+

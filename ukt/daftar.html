@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1drM76LlU3sdqpwo-Urq7ZULoyORC0UMQ ">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B7548',
+                        primaryDark: '#145c38'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif;
+            /* Menambahkan scroll-behavior: smooth; seperti di Beranda.html */
+            scroll-behavior: smooth; 
+        }
+        /* Style untuk membuat garis bawah menu aktif (khusus untuk halaman ini) */
+        .nav-link.active {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+            text-decoration-thickness: 2px;
+            text-decoration-color: white; /* Garis putih untuk kontras */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gradient-to-b from-emerald-50 to-slate-50 text-slate-800 overflow-x-hidden">
+
+    <header id="main-header" class="sticky top-0 z-50 bg-primary text-white shadow-lg transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <div class="flex items-center space-x-3 group cursor-pointer">
+                <img src="../logopn.png" alt="Logo PAGARNUSA" class="h-10 transition-transform duration-500 group-hover:rotate-[360deg]">
+                <h1 class="text-sm font-bold tracking-wide leading-tight uppercase">
+                    PAGARNUSA<br>UNUSIA
+                </h1>
+            </div>
+            
+            <nav id="nav-desktop" class="hidden md:flex space-x-8">
+<a href="index.html" class="nav-link flex items-center gap-2 text-sm font-medium hover:text-emerald-200 transition-colors duration-300">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left">
+        <path d="m12 19-7-7 7-7"/>
+        <path d="M19 12H5"/>
+    </svg>
+    Kembali
+</a>
+            </nav>
+
+            <button id="nav-toggle" class="md:hidden p-2 focus:outline-none transition-transform active:scale-90">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+            
+        </div>
+        
+        <nav id="nav-mobile" class="hidden md:hidden absolute w-full bg-primaryDark shadow-2xl animate-fade-in">
+            <a href="index.html" class="nav-link block px-6 py-4 text-sm font-medium hover:bg-emerald-800 transition-colors border-t border-emerald-700/50">Beranda</a>
+            <a href="index.html" class="nav-link block px-6 py-4 text-sm font-medium hover:bg-emerald-800 transition-colors border-t border-emerald-700/50">Informasi</a>
+            <a href="daftar.html" class="nav-link block px-6 py-4 text-sm font-bold bg-emerald-700 transition-colors border-b border-emerald-900/50">Daftar</a>
+        </nav>
+    </header>
+
+    <main class="flex-1 w-full max-w-2xl mx-auto px-4 py-6">
+
+        <section id="closed-section" class="hidden bg-white rounded-2xl shadow-xl p-10 mt-4 border border-red-100 text-center animate-[fadeInScale_0.5s_ease-out]">
+            <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="text-5xl">🥺</span>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-800 mb-2">Pendaftaran Ditutup</h2>
+            <p class="text-slate-500 leading-relaxed">
+                Maaf, batas waktu pendaftaran Ujian Kenaikan Tingkat telah berakhir pada 31 Desember 2025. 
+                Silahkan hubungi admin melalui tombol di bawah ini.
+            </p>
+            
+            <a href="https://wa.me/6285715232441" target="_blank" class="inline-flex items-center justify-center mt-8 px-6 py-3 bg-emerald-50 text-primary border border-primary rounded-xl font-bold hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+                <i class="fab fa-whatsapp mr-2 text-xl"></i> Hubungi Admin
+            </a>
+        </section>
+
+        <section id="form-section" class="bg-white rounded-2xl shadow-xl p-6 md:p-10 mt-4 border border-emerald-50 transform transition-all duration-700 opacity-0 translate-y-8 animate-[fadeInUp_0.8s_ease-out_forwards]" aria-labelledby="form-heading">
+            <div class="text-center mb-8">
+                <h2 id="form-heading" class="text-2xl md:text-3xl font-extrabold text-primary mb-1 tracking-tight">PENDAFTARAN PESERTA<br></h2>
+                <p class="text-sm font-bold text-slate-400 tracking-widest uppercase">UJIAN KENAIKAN TINGKAT</p>
+                <div class="w-16 h-1 bg-emerald-100 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <form id="formData" class="space-y-5">
+
+                <div class="group">
+                    <label for="nama" class="block text-sm font-bold text-slate-700 mb-1.5 transition-colors group-focus-within:text-primary">Nama KTP *</label>
+                    <input type="text" id="nama" name="nama" required placeholder="Nama Lengkap"
+                        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white">
+                </div>
+
+                <div class="group">
+                    <label for="email" class="block text-sm font-bold text-slate-700 mb-1.5 transition-colors group-focus-within:text-primary">Email *</label>
+                    <input type="email" id="email" name="email" required placeholder="nama@gmail.com"
+                        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white">
+                </div>
+
+                <div class="group">
+                    <label for="ttl" class="block text-sm font-bold text-slate-700 mb-1.5 transition-colors group-focus-within:text-primary">Tempat dan Tanggal Lahir *</label>
+                    <input type="text" id="ttl" name="ttl" required placeholder="Cnth: Jakarta, 10 Januari 2026"
+                        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white">
+                </div>
+
+                <div class="group">
+                    <label for="alamat" class="block text-sm font-bold text-slate-700 mb-1.5 transition-colors group-focus-within:text-primary">Alamat *</label>
+                    <input type="text" id="alamat" name="alamat" required placeholder="Kabupaten, Provinsi"
+                        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white">
+                </div>
+
+                <div class="group">
+                    <label for="whatsapp" class="block text-sm font-bold text-slate-700 mb-1.5 transition-colors group-focus-within:text-primary">Nomor WhatsApp *</label>
+                    <input type="tel" id="whatsapp" name="whatsapp" required pattern="08[0-9]{8,11}" placeholder="08xxxxxxxxxx"
+                        class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white">
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="group">
+                        <label for="angkatan" class="block text-sm font-bold text-slate-700 mb-1.5 transition-colors group-focus-within:text-primary">Angkatan *</label>
+                        <select id="angkatan" name="angkatan" required
+                            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white appearance-none cursor-pointer">
+                            <option value="">-- Pilih Angkatan --</option>
+                            <option>2022</option>
+                            <option>2023</option>
+                            <option>2024</option>
+                            <option>2025</option>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <label for="ujian" class="block text-sm font-bold text-slate-700 mb-1.5 transition-colors group-focus-within:text-primary">Ujian yang Diikuti *</label>
+                        <p class="text-[11px] text-emerald-700 leading-relaxed">Note: Bukan strip yang sekarang.</p>
+                        <select id="ujian" name="ujian" required
+                            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white appearance-none cursor-pointer">
+                            <option value="">-- Pilih Ujian --</option>
+                            <option>Putih</option>
+                            <option>Kuning</option>
+                            <option>Merah</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="p-5 bg-emerald-50 rounded-2xl border border-emerald-100 space-y-2">
+                    <label for="link_sertifikat" class="block text-sm font-bold text-emerald-900">Link Sertifikat (jika sudah UKT sebelumnya)</label>
+                    <p class="text-[11px] text-emerald-700 leading-relaxed">Klik link di bawah → Upload Sertifikat → Ubah nama file ke Nama Lengkap → Salin Link File → Tempel di kolom berikut.</p>
+                    <a href="https://drive.google.com/drive/folders/12ijbVqbuR9A7ffhKK6ut5n_pIt-UHHmZ?usp=sharing" target="_blank"
+                        class="inline-flex items-center text-xs font-bold text-primary hover:text-primaryDark transition-all hover:translate-x-1">
+                        <i class="fas fa-cloud-upload-alt mr-2"></i> Upload disini
+                    </a>
+                    <input type="url" id="link_sertifikat" name="link_sertifikat" placeholder="https://drive.google.com/..."
+                        class="w-full mt-2 rounded-xl border border-emerald-200 bg-white px-4 py-3 text-sm focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary">
+                </div>
+                
+                <button type="submit"
+                    class="w-full mt-6 bg-primary hover:bg-primaryDark text-white font-bold py-4 rounded-2xl transition-all transform hover:-translate-y-1 active:scale-95 shadow-lg shadow-emerald-900/20 flex items-center justify-center space-x-2 group">
+                    <span>Daftar</span>
+                    <i class="fas fa-paper-plane text-sm group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                </button>
+            </form>
+        </section>
+
+        <section id="success-section" class="hidden bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center mt-4 border border-emerald-100 animate-[fadeInScale_0.5s_ease-out]" aria-labelledby="success-heading">
+            <div class="w-20 h-20 bg-emerald-100 text-primary rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+                <i class="fas fa-check text-4xl"></i>
+            </div>
+            <h2 id="success-heading" class="text-2xl font-extrabold text-slate-800 mb-3">Pendaftaran Berhasil!</h2>
+            <p class="text-slate-500 mb-8 leading-relaxed">Data Anda telah kami terima. Langkah selanjutnya, silakan bergabung ke grup koordinasi resmi kami:</p>
+            
+            <a href="https://chat.whatsapp.com/CoPED7SKvUK2ayPSfZvmNV" target="_blank"
+                class="inline-flex items-center justify-center w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl transition-all transform hover:scale-[1.02] shadow-lg mb-4">
+                <i class="fab fa-whatsapp text-xl mr-3"></i> Bergabung ke Grup WhatsApp
+            </a>
+            
+            <button id="reset-button" type="button" 
+                class="block w-full mt-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 rounded-2xl transition-all text-sm">
+                <i class="fas fa-redo-alt mr-2 text-xs"></i> Kirim Data Lagi
+            </button>
+        </section>
+        
+        <section id="information-section" class="hidden"></section>
+        <section id="contact-section" class="hidden"></section>
+
+    </main>
+
+    <footer class="bg-primary text-white text-center py-6 mt-12">
+        <div class="container mx-auto px-4">
+            <p class="text-xs opacity-80 font-medium tracking-wide">© 2025 PAGARNUSA UNUSIA. Semua hak cipta dilindungi.</p>
+        </div>
+    </footer>
+
+    <style>
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
+    </style>
+
+<script>
+    const form = document.getElementById('formData');
+    const formSection = document.getElementById('form-section');
+    const successSection = document.getElementById('success-section');
+    const resetButton = document.getElementById('reset-button');
+    const closedSection = document.getElementById('closed-section');
+    
+    // URL Apps Script (Pastikan sudah benar)
+    const formActionURL = "https://script.google.com/macros/s/AKfycbxwf-nOiuigRQi5gLBglkrxqMEYm2F-zRCP4Dc_meDnFqmCodjMgeIYyQHC_tx6rHxJ6w/exec";
+
+    // --- FUNGSI CEK WAKTU PENDAFTARAN ---
+    function checkDeadline() {
+        const deadline = new Date('2025-12-31T23:59:59').getTime();
+        const now = new Date().getTime();
+        if (now > deadline) {
+            formSection.classList.add('hidden');
+            closedSection.classList.remove('hidden');
+            return true;
+        }
+        return false;
+    }
+    checkDeadline();
+
+    function resetForm() {
+        if(checkDeadline()) return;
+        successSection.classList.add('hidden');
+        formSection.classList.remove('hidden');
+        formSection.scrollIntoView({ behavior: 'smooth' }); 
+    }
+
+    // --- LOGIKA KIRIM DATA (DIUBAH KE JSON) ---
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        if (checkDeadline()) {
+            alert('Maaf, pendaftaran sudah ditutup.');
+            return;
+        }
+        
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-circle-notch animate-spin mr-2"></i> Mengirim...';
+
+        // 1. Ambil data dari form
+        const formData = new FormData(form);
+        
+        // 2. Ubah FormData menjadi Object JSON agar sesuai dengan Apps Script
+        const dataObj = {
+            tambahPeserta: true, // Trigger untuk if (data.tambahPeserta) di script
+            nama: formData.get('nama'),
+            email: formData.get('email'),
+            ttl: formData.get('ttl'),
+            alamat: formData.get('alamat'),
+            whatsapp: formData.get('whatsapp'),
+            angkatan: formData.get('angkatan'),
+            ujian: formData.get('ujian'),
+            sertifikaturl: formData.get('link_sertifikat') // Map link_sertifikat ke sertifikaturl
+        };
+
+        // 3. Kirim menggunakan Fetch dengan format JSON
+        fetch(formActionURL, { 
+            method: 'POST', 
+            mode: 'no-cors', // Menghindari masalah CORS
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dataObj) 
+        })
+        .then(() => {
+            // Karena menggunakan no-cors, kita anggap sukses jika tidak masuk ke catch
+            formSection.classList.add('hidden');
+            successSection.classList.remove('hidden');
+            form.reset();
+            successSection.scrollIntoView({ behavior: 'smooth' }); 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Gagal mengirim data. Silakan coba lagi.');
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<span>Daftar</span><i class="fas fa-paper-plane text-sm group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>';
+        });
+    });
+
+    resetButton.addEventListener('click', resetForm);
+
+    // --- NAVIGASI MOBILE ---
+    const navToggle = document.getElementById('nav-toggle');
+    const navMobile = document.getElementById('nav-mobile');
+    navToggle.addEventListener('click', () => {
+        navMobile.classList.toggle('hidden');
+        const icon = navToggle.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+    });
+
+    navMobile.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMobile.classList.add('hidden');
+            const icon = navToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        });
+    });
+</script>
+</body>
+</html>
+
+
+
+

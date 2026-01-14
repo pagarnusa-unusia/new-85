@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profil Peserta | PAGARNUSA UNUSIA</title>
+    <link rel="icon" href="../logopn.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B7548',
+                        primaryDark: '#145c38'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f8fafc; 
+            scroll-behavior: smooth;
+        }
+
+        .glass-card { 
+            background: white; 
+            border-radius: 24px; 
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
+            border: 1px solid #f1f5f9; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.08);
+        }
+
+        .status-badge { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        
+        @keyframes subtle-glow {
+            0% { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+            50% { box-shadow: 0 0 25px rgba(27, 117, 72, 0.3); }
+            100% { box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+        }
+
+        .lulus-glow { 
+            animation: subtle-glow 3s infinite; 
+            border: 2px solid #1B7548 !important; 
+        }
+
+        .swal2-popup { border-radius: 32px !important; padding: 2rem !important; }
+        .swal2-title { color: #1B7548 !important; font-weight: 800 !important; }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #1B7548; border-radius: 10px; }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col text-slate-700">
+
+    <header class="sticky top-0 z-50 bg-primary text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="../logopn.png" alt="Logo" class="h-10 drop-shadow-md">
+                <div class="leading-tight">
+                    <h1 class="text-sm font-bold uppercase tracking-wider">PAGARNUSA</h1>
+                    <p class="text-[10px] opacity-80 uppercase tracking-widest">Unusia Jakarta</p>
+                </div>
+            </div>
+            <button id="logout-button" class="bg-red-500 hover:bg-red-600 px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shadow-lg shadow-red-900/20 active:scale-95">
+                <i class="fas fa-power-off"></i> <span>KELUAR</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 container mx-auto max-w-5xl px-4 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-4 space-y-6">
+                <div id="main-profile-card" class="glass-card p-8 text-center">
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <div class="w-full h-full bg-emerald-50 rounded-full flex items-center justify-center border-4 border-white shadow-inner overflow-hidden">
+                            <img id="display-foto" src="" alt="Foto" class="w-full h-full object-cover hidden" onerror="this.src='https://ui-avatars.com/api/?name=User&background=1B7548&color=fff'">
+                            <i id="foto-placeholder" class="fas fa-user-circle text-6xl text-emerald-200"></i>
+                        </div>
+                        <div class="absolute bottom-1 right-1 w-8 h-8 bg-primary rounded-full border-4 border-white flex items-center justify-center shadow-md">
+                            <i class="fas fa-check text-[10px] text-white"></i>
+                        </div>
+                    </div>
+                    
+                    <h2 id="display-nama" class="text-xl font-bold text-slate-800 leading-tight">Memuat Nama...</h2>
+                    <p id="display-email" class="text-xs text-slate-400 mb-6 font-medium tracking-wide">email@peserta.com</p>
+                    
+                    <div id="status-box" class="status-badge py-4 px-2 rounded-2xl border-2 bg-slate-50 border-slate-100">
+                        <p class="text-[9px] uppercase font-black tracking-[0.2em] mb-1 text-slate-400">Status Peserta</p>
+                        <p id="status-text" class="text-lg font-bold uppercase tracking-tight">Meninjau...</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="glass-card p-2">
+                        <a href="pembayaran.html" class="flex items-center justify-between w-full bg-white p-4 rounded-xl hover:bg-emerald-50 transition group">
+                            <span class="text-sm font-semibold flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                Konfirmasi Pembayaran
+                            </span>
+                            <i class="fas fa-chevron-right text-[10px] opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                        </a>
+                    </div>
+
+                    <div class="glass-card p-2">
+                        <button onclick="bukaMateri()" class="flex items-center justify-between w-full bg-white p-4 rounded-xl hover:bg-emerald-50 transition group">
+                            <span class="text-sm font-semibold flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                Materi Ujian
+                            </span>
+                            <i class="fas fa-chevron-right text-[10px] opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-8">
+                
+                <div class="glass-card p-8 lg:p-10">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-6 mb-8">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-3">
+                            <span class="w-2 h-6 bg-primary rounded-full"></span>
+                            Biodata Lengkap
+                        </h3>
+                        <i class="fas fa-id-card text-slate-200 text-2xl"></i>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12 text-sm">
+                        <div class="space-y-1">
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Tempat, Tanggal Lahir</p>
+                            <p id="display-ttl" class="font-semibold text-slate-700">-</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Angkatan</p>
+                            <p id="display-angkatan" class="font-semibold text-slate-700">-</p>
+                        </div>
+                        <div class="md:col-span-2 space-y-1">
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Alamat Lengkap</p>
+                            <p id="display-alamat" class="font-semibold text-slate-700 leading-relaxed">-</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">No. WhatsApp</p>
+                            <p id="display-whatsapp" class="font-semibold text-slate-700">-</p>
+                        </div>
+                        <div class="space-y-1">
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Kategori Ujian</p>
+                            <p id="display-ujian" class="font-semibold text-slate-700">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sertifikat-section" class="glass-card p-8 lg:p-10 overflow-hidden relative">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-6 mb-8">
+                        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-3">
+                            <span class="w-2 h-6 bg-primary rounded-full"></span>
+                            E-Sertifikat
+                        </h3>
+                        <i class="fas fa-certificate text-slate-200 text-2xl"></i>
+                    </div>
+
+                    <div id="sertifikat-container" class="hidden">
+                        <div class="flex flex-col md:flex-row items-center gap-8 bg-emerald-50/50 p-6 rounded-3xl border border-emerald-100">
+                            <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-emerald-100">
+                                <i class="fas fa-file-pdf text-4xl text-red-500"></i>
+                            </div>
+                            <div class="flex-1 text-center md:text-left">
+                                <h4 class="font-bold text-slate-800">Sertifikat Kelulusan.pdf</h4>
+                                <p class="text-xs text-slate-400">Sertifikat resmi UKT Pagar Nusa Unusia</p>
+                            </div>
+                            <a id="download-sertifikat" href="#" target="_blank" class="w-full md:w-auto bg-primary hover:bg-primaryDark text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-emerald-900/20 text-center active:scale-95">
+                                <i class="fas fa-download mr-2"></i> DOWNLOAD
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="sertifikat-placeholder" class="text-center py-12 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
+                        <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                            <i class="fas fa-lock text-slate-300 text-xl"></i>
+                        </div>
+                        <p id="placeholder-text" class="text-slate-400 text-xs font-medium italic px-6">Belum mengikuti ujian.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-100 py-8 text-center mt-auto">
+        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em]">Pagar Nusa UNUSIA • Sistem Informasi Peserta</p>
+    </footer>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysIrp1df99QqoEYHhXEuiQOkJ2CCAwVqTRJU6xCk1Qj1nBOns3oyQHc7ddUyZwQM7V-w/exec";
+
+        function rilisPetasanMeriah() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const colors = ['#1B7548', '#FFD700', '#ffffff', '#22c55e'];
+
+            (function frame() {
+                confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0, y: 0.6 }, colors: colors });
+                confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1, y: 0.6 }, colors: colors });
+                if (Date.now() < animationEnd) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUserProfile'));
+            if (!currentUser) {
+                window.location.href = 'ukt/login.html'; 
+                return;
+            }
+
+            renderUI(currentUser);
+            await syncDataFromSpreadsheet(currentUser);
+
+            document.getElementById('logout-button').onclick = () => {
+                localStorage.removeItem('currentUserProfile');
+                sessionStorage.removeItem('swalShown');
+                window.location.href = 'ukt/login.html'; 
+            };
+        });
+
+        async function syncDataFromSpreadsheet(userSession) {
+            try {
+                const resp = await fetch(`${SCRIPT_URL}?type=admin`, {
+                    method: 'GET',
+                    mode: 'cors' 
+                });
+                if (!resp.ok) throw new Error("Respon server tidak ok");
+                const allData = await resp.json();
+                const updatedUser = allData.find(u => 
+                    (u.email || "").toLowerCase().trim() === (userSession.email || "").toLowerCase().trim()
+                );
+                if (updatedUser) {
+                    localStorage.setItem('currentUserProfile', JSON.stringify(updatedUser));
+                    renderUI(updatedUser);
+                }
+            } catch (e) {
+                console.error("Sinkronisasi Gagal.", e);
+                renderUI(userSession); 
+            }
+        }
+
+        function renderUI(data) {
+            document.getElementById('display-nama').textContent = data.nama || "-";
+            document.getElementById('display-email').textContent = data.email || "-";
+            document.getElementById('display-angkatan').textContent = data.angkatan || "-";
+            document.getElementById('display-ujian').textContent = data.ujian || "-";
+            document.getElementById('display-ttl').textContent = data["tempat, tanggal lahir"] || "-";
+            document.getElementById('display-alamat').textContent = data["alamat lengkap"] || "-";
+            document.getElementById('display-whatsapp').textContent = data["no. whatsapp"] || "-";
+
+            const imgEl = document.getElementById('display-foto');
+            const placeholderEl = document.getElementById('foto-placeholder');
+            if (data.fotourl && data.fotourl.length > 10) {
+                imgEl.src = data.fotourl;
+                imgEl.classList.remove('hidden');
+                placeholderEl.classList.add('hidden');
+            } else {
+                imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.nama)}&background=1B7548&color=fff`;
+                imgEl.classList.remove('hidden');
+                placeholderEl.classList.add('hidden');
+            }
+
+            const statusBox = document.getElementById('status-box');
+            const statusText = document.getElementById('status-text');
+            const profileCard = document.getElementById('main-profile-card');
+            const certContainer = document.getElementById('sertifikat-container');
+            const certPlaceholder = document.getElementById('sertifikat-placeholder');
+            const currentStatus = (data.status || "Pending").toLowerCase();
+
+            profileCard.classList.remove('lulus-glow');
+            certContainer.classList.add('hidden');
+            certPlaceholder.classList.remove('hidden');
+
+            if (currentStatus.includes("diskualifikasi") || currentStatus.includes("gagal") || currentStatus.includes("tidak lulus")) {
+                statusText.textContent = "Diskualifikasi ❌";
+                statusBox.className = "status-badge py-4 px-2 rounded-2xl border-2 bg-red-50 border-red-500 text-red-700";
+                document.getElementById('placeholder-text').textContent = "Mohon maaf, Anda dinyatakan tidak lulus kualifikasi.";
+
+                if (!sessionStorage.getItem('swalShown')) {
+                    Swal.fire({
+                        title: 'MOHON MAAF',
+                        text: 'Anda dinyatakan tidak memenuhi Kualifikasi Ujian Kenaikan Tingkat IV. Tetap semangat dan coba lagi di kesempatan berikutnya.',
+                        icon: 'error',
+                        confirmButtonColor: '#ef4444',
+                        confirmButtonText: 'Siap, Terima Kasih'
+                    });
+                    sessionStorage.setItem('swalShown', 'true');
+                }
+            } 
+            else if (currentStatus.includes("kualifikasi") || currentStatus.includes("lulus")) {
+                statusText.textContent = "Kualifikasi ✅";
+                statusBox.className = "status-badge py-4 px-2 rounded-2xl border-2 bg-emerald-50 border-emerald-500 text-emerald-700";
+                profileCard.classList.add('lulus-glow');
+
+                if (!sessionStorage.getItem('swalShown')) {
+                    Swal.fire({
+                        title: 'Selamat',
+                        html: 'Anda <b>Telah Lulus</b>.<br>dalam Ujian Kenaikan Tingkat IV',
+                        icon: 'success',
+                        showCancelButton: true,
+                        confirmButtonColor: '#1B7548',
+                        cancelButtonColor: '#64748b',
+                        confirmButtonText: '<i class="fas fa-camera"></i> Twibbon',
+                        cancelButtonText: 'Alhamdulillah',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.open('https://uktpagarnusa.my.id/twb', '_blank');
+                        }
+                    });
+                    rilisPetasanMeriah();
+                    sessionStorage.setItem('swalShown', 'true');
+                }
+            } 
+            else {
+                statusText.textContent = "Sedang Ditinjau ⏳";
+                statusBox.className = "status-badge py-4 px-2 rounded-2xl border-2 bg-yellow-50 border-yellow-500 text-yellow-700";
+
+                if (!sessionStorage.getItem('swalShown')) {
+                    Swal.fire({
+                        title: 'Sedang ditinjau',
+                        text: 'Segera menyelesaikan ke tahap Pembayaran.',
+                        icon: 'info',
+                        confirmButtonColor: '#eab308',
+                        confirmButtonText: 'Baik, Saya Mengerti',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            sessionStorage.setItem('swalShown', 'true');
+                            window.location.href = 'ukt/pembayaran.html';
+                        }
+                    });
+                }
+            }
+
+            if ((currentStatus.includes("kualifikasi") || currentStatus.includes("lulus")) && data.sertifikaturl && data.sertifikaturl.includes("http")) {
+                certContainer.classList.remove('hidden');
+                certPlaceholder.classList.add('hidden');
+                document.getElementById('download-sertifikat').href = data.sertifikaturl;
+            }
+        }
+
+        function bukaMateri() {
+            const user = JSON.parse(localStorage.getItem('currentUserProfile'));
+            const tingkatan = (user.ujian || "").trim();
+            const map = { "Putih": "putih", "Kuning": "kuning", "Merah": "merah", "Biru": "biru" };
+            if (map[tingkatan]) {
+                window.location.href = `materi/materi_${map[tingkatan]}.html`;
+            } else {
+                Swal.fire({
+                    title: 'Informasi',
+                    text: "Materi untuk kategori " + tingkatan + " belum tersedia.",
+                    icon: 'info',
+                    confirmButtonColor: '#1B7548'
+                });
+            }
+        }
+    </script>
+</body>
+</html>
+

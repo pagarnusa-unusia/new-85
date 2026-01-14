@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>E-Absensi | PSNU PAGARNUSA UNUSIA</title>
+    <link rel="icon" type="image/png" href="../logopn.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { 
+            --primary: #10b981; 
+            --bg-dark: #0f172a;
+        }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-dark);
+            color: #f8fafc; 
+            min-height: 100vh;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Lapisan Latar Belakang Sinematik */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -10%; 
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            z-index: -1;
+            background-image: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+                              url('https://lh3.googleusercontent.com/d/1vI4PCquzIBTekytJ0pGo1xKym9qtZIQX?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            animation: cinematicRise 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+
+        @keyframes cinematicRise {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.15) translateY(-5%); }
+        }
+
+        .glass { 
+            background: rgba(30, 41, 59, 0.4); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+
+        .page { 
+            display: none; 
+            width: 100%; 
+            max-width: 480px; 
+            margin: auto; 
+            padding: 1.5rem;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+
+        .page.active { display: block; }
+
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .check-card input:checked + .card-content { 
+            background: rgba(16, 185, 129, 0.08); 
+            border-color: rgba(16, 185, 129, 0.5); 
+            box-shadow: 0 4px 20px -5px rgba(16, 185, 129, 0.2);
+        }
+
+        .check-card input:checked + .card-content .check-box { 
+            background: var(--primary); 
+            border-color: var(--primary); 
+            color: white;
+        }
+
+        .check-card input:checked + .card-content .avatar {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .header-gradient {
+            background: linear-gradient(to bottom, var(--bg-dark) 80%, transparent);
+        }
+
+        .nav-blur {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item.active i {
+            transform: translateY(-4px);
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col items-center">
+
+    <div id="page-kampus" class="page active">
+        <div class="text-center mt-10 mb-12">
+            <div class="inline-block p-4 rounded-[2.5rem] bg-emerald-500/5 mb-6">
+                <img src="../logopn.png" alt="Logo" class="w-24 h-24 mx-auto drop-shadow-2xl">
+            </div>
+            <h1 class="text-2xl font-extrabold text-white tracking-tight">PAGARNUSA</h1>
+            <p class="text-emerald-500 font-bold text-[10px] tracking-[0.4em] uppercase mt-1">Sistem Absensi Terpadu</p>
+        </div>
+
+        <div class="space-y-4">
+        <p class="text-slate-500 text-[11px] font-bold uppercase tracking-widest ml-1">Pilih Lokasi Latihan</p>
+
+<button onclick="navToPelet('Jakarta')" class="w-full glass p-5 rounded-3xl flex items-center gap-4 transition-all active:scale-[0.97]">
+    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center overflow-hidden">
+        <img src="../icona.png" 
+             onerror="this.src='https://img.icons8.com/color/48/monument.png'"
+             alt="Jakarta" class="w-9 h-9 object-contain">
+    </div>
+    <div class="text-left flex-1">
+        <h3 class="font-bold text-white uppercase text-sm tracking-wide">KAMPUS JAKARTA</h3>
+        <p class="text-[10px] text-slate-500 font-medium">Rooftop UNUSIA Jakarta</p>
+    </div>
+    <i class="fas fa-chevron-right text-slate-700 text-xs"></i>
+</button>
+
+<button onclick="navToPelet('Bogor')" class="w-full glass p-5 rounded-3xl flex items-center gap-4 transition-all active:scale-[0.97]">
+    <div class="w-12 h-12 rounded-2xl bg-sky-500/10 flex items-center justify-center overflow-hidden">
+        <img src="../iconb.png" 
+             onerror="this.src='https://img.icons8.com/color/48/sword.png'"
+             alt="Bogor" class="w-9 h-9 object-contain">
+    </div>
+    <div class="text-left flex-1">
+        <h3 class="font-bold text-white uppercase text-sm tracking-wide">KAMPUS BOGOR</h3>
+        <p class="text-[10px] text-slate-500 font-medium">GOR UNUSIA Bogor</p>
+    </div>
+    <i class="fas fa-chevron-right text-slate-700 text-xs"></i>
+</button>
+        </div>
+        <div class="h-32"></div> </div>
+
+    <div id="page-pelet" class="page">
+        <div class="flex items-center gap-4 mb-10">
+            <button onclick="showPage('page-kampus')" class="w-10 h-10 glass rounded-full flex items-center justify-center text-slate-400">
+                <i class="fas fa-arrow-left text-xs"></i>
+            </button>
+            <h2 id="display-kampus" class="text-xl font-extrabold text-white tracking-tight uppercase">Kampus</h2>
+        </div>
+        <div id="pelet-list" class="space-y-8 pb-32"></div>
+    </div>
+
+    <div id="page-daftar" class="page">
+        <div class="sticky top-0 z-50 header-gradient pt-6 pb-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                    <button onclick="showPage('page-pelet')" class="w-11 h-11 glass rounded-full flex items-center justify-center text-slate-400 active:scale-90 transition-transform">
+                        <i class="fas fa-arrow-left text-sm"></i>
+                    </button>
+                    <div>
+                        <span id="display-info" class="block text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] mb-1">Memuat...</span>
+                        <h2 class="text-white text-xl font-bold tracking-tight">Daftar Santri</h2>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <div class="flex items-center gap-2 bg-emerald-500/10 px-4 py-2 rounded-2xl border border-emerald-500/20">
+                        <span class="text-xs font-black text-emerald-500" id="check-count">0</span>
+                        <span class="text-[10px] font-bold text-emerald-500/60 uppercase">Hadir</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative group px-1">
+                <input type="text" id="search-input" onkeyup="filterSantri()" placeholder="Cari nama santri..." 
+                    class="w-full bg-slate-800/60 border border-white/10 pl-12 pr-28 py-4 rounded-2xl text-white text-sm outline-none focus:border-emerald-500/50 focus:ring-4 focus:ring-emerald-500/5 transition-all shadow-inner">
+                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 text-sm transition-colors group-focus-within:text-emerald-500"></i>
+                <button onclick="toggleSelectAll()" class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-extrabold text-emerald-500/80 bg-emerald-500/10 hover:bg-emerald-500/20 px-3 py-2 rounded-xl transition-colors uppercase tracking-wider">
+                    Hadir Semua
+                </button>
+            </div>
+        </div>
+
+        <div id="loading" class="hidden space-y-4 mt-6">
+            <div class="h-20 w-full glass rounded-2xl shimmer"></div>
+            <div class="h-20 w-full glass rounded-2xl shimmer"></div>
+            <div class="h-20 w-full glass rounded-2xl shimmer"></div>
+        </div>
+
+        <div id="santri-grid" class="grid grid-cols-1 gap-3 mt-6 pb-60"></div>
+
+        <div class="fixed bottom-[100px] left-0 right-0 flex justify-center px-8 z-[60]">
+            <button id="btn-submit" onclick="confirmSubmit()" 
+                class="w-full max-w-[380px] py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all active:scale-[0.95] flex items-center justify-center gap-3 border border-white/10">
+                <span id="btn-text" class="text-xs tracking-[0.2em] font-black uppercase">SIMPAN ABSENSI</span>
+                <i class="fas fa-paper-plane text-[10px] opacity-70"></i>
+            </button>
+        </div>
+    </div>
+
+    <div id="page-rekap" class="page">
+        <div class="mt-10 mb-6 flex justify-between items-end">
+            <div>
+                <h2 class="text-white text-2xl font-extrabold tracking-tight">Rekap Kehadiran</h2>
+                <p class="text-emerald-500 text-[10px] font-bold uppercase tracking-widest mt-1">Total Kehadiran Santri</p>
+            </div>
+            <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded-xl transition-all active:scale-95 shadow-lg shadow-emerald-900/20">
+                <i class="fas fa-file-excel"></i>
+            </button>
+        </div>
+
+        <div class="space-y-3 mb-6">
+            <div class="relative">
+                <input type="text" id="search-rekap" onkeyup="filterRekap()" placeholder="Cari nama atau pelet..." 
+                    class="w-full bg-slate-800/60 border border-white/10 pl-10 pr-4 py-3 rounded-xl text-white text-xs outline-none focus:border-emerald-500/50 transition-all">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+            </div>
+        </div>
+
+        <div id="rekap-container" class="space-y-3 pb-40"></div>
+    </div>
+
+    <nav class="fixed bottom-0 left-0 w-full nav-blur z-[100] px-6 pt-4 pb-8 flex justify-around items-center">
+        <button onclick="showPage('page-kampus')" class="nav-item flex flex-col items-center gap-1 text-slate-500 active" id="nav-absen">
+            <i class="fas fa-user-check text-lg"></i>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Absen</span>
+        </button>
+        <button onclick="loadRekap()" class="nav-item flex flex-col items-center gap-1 text-slate-500" id="nav-rekap">
+            <i class="fas fa-clipboard-list text-lg"></i>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Rekap</span>
+        </button>
+    </nav>
+
+    <script>
+        const CONFIG = {
+            API: "https://script.google.com/macros/s/AKfycbwa42RDTx_2YlhOVAf_8MOGYxZDHij-I7OvKt0U0IxpdYl3RQsHxCkJRZsb6vLzh9ob/exec",
+            MENU: { 
+                "Tingkat Muda": ["Putih", "Kuning", "Merah"], 
+                "Tingkat Madya": ["Biru", "Coklat", "Hitam"] 
+            }
+        };
+
+        let state = { kampus: '', tingkat: '', pelet: '', data: [], rekapData: [] };
+
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if(id === 'page-rekap') {
+                document.getElementById('nav-rekap').classList.add('active');
+            } else {
+                document.getElementById('nav-absen').classList.add('active');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function navToPelet(k) {
+            state.kampus = k;
+            document.getElementById('display-kampus').innerText = k;
+            renderPeletMenu();
+            showPage('page-pelet');
+        }
+
+        function renderPeletMenu() {
+            const container = document.getElementById('pelet-list');
+            container.innerHTML = '';
+            for (const [tingkat, warnaList] of Object.entries(CONFIG.MENU)) {
+                let html = `<div class="space-y-3">
+                    <h3 class="text-[10px] font-black text-slate-500 tracking-[0.3em] ml-1 uppercase">${tingkat}</h3>`;
+                
+                warnaList.forEach(warna => {
+                    const colorMap = {
+                        'Putih': 'bg-white', 'Kuning': 'bg-yellow-400', 'Merah': 'bg-red-500',
+                        'Biru': 'bg-blue-600', 'Coklat': 'bg-amber-900', 'Hitam': 'bg-slate-950 border border-white/20'
+                    };
+                    html += `
+                        <button onclick="navToDaftar('${tingkat}', '${warna}')" class="w-full glass p-4 rounded-2xl flex items-center justify-between group transition-all active:bg-white/5">
+                            <div class="flex items-center gap-4">
+                                <div class="w-1.5 h-6 rounded-full ${colorMap[warna] || 'bg-emerald-500'}"></div>
+                                <span class="font-bold text-white text-sm tracking-wide">Pelet ${warna}</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-slate-800 text-[10px]"></i>
+                        </button>`;
+                });
+                container.innerHTML += html + `</div>`;
+            }
+        }
+
+        async function navToDaftar(t, p) {
+            state.tingkat = t; state.pelet = p;
+            document.getElementById('display-info').innerText = `${t} • ${p}`;
+            showPage('page-daftar');
+            if(state.data.length === 0) await fetchSantri();
+            renderSantri();
+        }
+
+        async function fetchSantri() {
+            const loading = document.getElementById('loading');
+            loading.classList.remove('hidden');
+            try {
+                const res = await fetch(CONFIG.API);
+                state.data = await res.json();
+            } catch (e) { alert("Error: Gagal memuat data"); }
+            finally { loading.classList.add('hidden'); }
+        }
+
+        function renderSantri() {
+            const grid = document.getElementById('santri-grid');
+            const filtered = state.data.filter(s => s.Kampus === state.kampus && s.Pelet === state.pelet);
+            
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div class="text-center py-20 opacity-30"><i class="fas fa-user-slash text-3xl mb-3"></i><p class="text-[10px] font-bold uppercase tracking-widest">Tidak ada data</p></div>`;
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(s => `
+                <label class="check-card cursor-pointer block">
+                    <input type="checkbox" value="${s.Nama}" class="hidden" onchange="updateUI()">
+                    <div class="card-content glass p-3.5 rounded-2xl border border-transparent transition-all flex items-center justify-between">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <div class="avatar w-9 h-9 shrink-0 rounded-xl bg-slate-800/50 border border-white/5 flex items-center justify-center text-[11px] font-bold text-slate-500 uppercase transition-colors">
+                                ${s.Nama.substring(0,2)}
+                            </div>
+                            <span class="font-semibold text-slate-200 text-xs uppercase truncate tracking-tight">${s.Nama}</span>
+                        </div>
+                        <div class="check-box w-5 h-5 shrink-0 rounded-md border border-slate-700 flex items-center justify-center text-[8px] text-transparent transition-all">
+                            <i class="fas fa-check"></i>
+                        </div>
+                    </div>
+                </label>`).join('');
+            updateUI();
+        }
+
+        function filterSantri() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            document.querySelectorAll('.check-card').forEach(card => {
+                const nama = card.querySelector('span').innerText.toLowerCase();
+                card.style.display = nama.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function toggleSelectAll() {
+            const checkboxes = document.querySelectorAll('#santri-grid input[type="checkbox"]');
+            const visible = Array.from(checkboxes).filter(cb => cb.closest('.check-card').style.display !== 'none');
+            const anyUnchecked = visible.some(cb => !cb.checked);
+            visible.forEach(cb => cb.checked = anyUnchecked);
+            updateUI();
+        }
+
+        function updateUI() {
+            const count = document.querySelectorAll('#santri-grid input:checked').length;
+            document.getElementById('check-count').innerText = count;
+        }
+
+        function confirmSubmit() {
+            const count = document.querySelectorAll('#santri-grid input:checked').length;
+            if(count === 0) return alert("Pilih santri terlebih dahulu!");
+            if(confirm(`Simpan kehadiran untuk ${count} santri?`)) submitAbsen();
+        }
+
+        async function submitAbsen() {
+            const btn = document.getElementById('btn-submit');
+            const btnText = document.getElementById('btn-text');
+            const hadir = Array.from(document.querySelectorAll('#santri-grid input:checked')).map(cb => cb.value);
+            
+            btn.disabled = true;
+            btn.classList.add('opacity-50');
+            btnText.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> MENGAMBIL LOKASI...`;
+
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                btnText.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> MENGIRIM...`;
+
+                const payload = {
+                    timestamp: new Date().toISOString(),
+                    kampus: state.kampus, 
+                    pelet: state.pelet, 
+                    hadir: hadir.join(", "),
+                    lokasi: `${lat},${lon}`
+                };
+
+                try {
+                    await fetch(CONFIG.API, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
+                    alert("Berhasil disimpan!");
+                    location.reload();
+                } catch (e) {
+                    alert("Gagal mengirim.");
+                    resetSubmitButton();
+                }
+            }, (error) => {
+                alert("Gagal mengambil lokasi. Pastikan GPS aktif.");
+                resetSubmitButton();
+            }, { enableHighAccuracy: true });
+        }
+
+        function resetSubmitButton() {
+            const btn = document.getElementById('btn-submit');
+            const btnText = document.getElementById('btn-text');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50');
+            btnText.innerText = "SIMPAN ABSENSI";
+        }
+
+        async function loadRekap() {
+            showPage('page-rekap');
+            const container = document.getElementById('rekap-container');
+            container.innerHTML = `<div class="text-center py-10"><i class="fas fa-circle-notch fa-spin text-emerald-500 text-2xl"></i></div>`;
+            
+            try {
+                const res = await fetch(CONFIG.API + "?action=getRekap");
+                state.rekapData = await res.json();
+                renderRekap(state.rekapData);
+            } catch (e) {
+                container.innerHTML = `<p class="text-center text-red-400 text-xs py-10">Gagal memuat rekap.</p>`;
+            }
+        }
+
+        function renderRekap(dataList) {
+            const container = document.getElementById('rekap-container');
+            if(dataList.length === 0) {
+                container.innerHTML = `<p class="text-center text-slate-500 text-xs py-10">Data tidak ditemukan</p>`;
+                return;
+            }
+            container.innerHTML = dataList.map(item => `
+                <div class="rekap-card glass p-4 rounded-2xl flex items-center justify-between border border-white/5">
+                    <div class="overflow-hidden">
+                        <h4 class="text-white font-bold text-sm truncate uppercase">${item.nama}</h4>
+                        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Pelet ${item.pelet}</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="text-emerald-500 font-black text-lg">${item.total}</span>
+                        <p class="text-[8px] text-slate-500 font-bold uppercase">Hadir</p>
+                    </div>
+                </div>`).join('');
+        }
+
+        function filterRekap() {
+            const query = document.getElementById('search-rekap').value.toLowerCase();
+            const filtered = state.rekapData.filter(item => 
+                item.nama.toLowerCase().includes(query) || 
+                item.pelet.toLowerCase().includes(query)
+            );
+            renderRekap(filtered);
+        }
+
+        function exportToExcel() {
+            if (state.rekapData.length === 0) return alert("Tidak ada data untuk diekspor");
+            const dataToExport = state.rekapData.map(item => ({
+                "Nama Santri": item.nama,
+                "Pelet": item.pelet,
+                "Total Kehadiran": item.total
+            }));
+            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Rekap Absensi");
+            XLSX.writeFile(workbook, `Rekap_Absensi_PagarNusa_${new Date().toISOString().split('T')[0]}.xlsx`);
+        }
+    </script>
+</body>
+</html>

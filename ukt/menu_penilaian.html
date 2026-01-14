@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal Penilaian</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1B7548',
+                        primaryDark: '#145c38'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: #f8fafc; }
+        /* Menghilangkan scrollbar tambahan */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen">
+
+    <div id="portal-content" class="flex flex-col min-h-screen bg-slate-50 overflow-y-auto no-scrollbar">
+        <header id="main-header" class="sticky top-0 z-50 bg-primary text-white shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <img src="https://uktpagarnusa.my.id/logopn.png" alt="Logo PAGARNUSA" class="h-10">
+                    <h1 class="text-sm font-bold tracking-wide leading-tight uppercase">
+                        Portal<br>Penilaian
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-xs hidden sm:inline opacity-80 italic">Akses Darurat</span>
+                    <a href="login.html" onclick="location.reload()" class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-xs font-bold transition flex items-center">
+                        <i class="fas fa-sign-out-alt mr-2"></i> LOGOUT
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-4xl mx-auto px-4 py-12 w-full">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-extrabold text-primary">Portal Penilaian</h2>
+                <p class="text-slate-500 mt-2 text-sm">Akses kesemua penguji.</p>
+                <div class="h-1 w-16 bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                <a href="https://uktpagarnusa.my.id/penguji/hafalan" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-primary rounded-full flex items-center justify-center text-3xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <span class="font-bold text-lg text-slate-800">Hafalan</span>
+                    <p class="text-xs text-slate-400 mt-2">Amaliah Santri Nahdlatul Ulama An Nahdliyah (Tahlil, Doa, Wirid dll.</p>
+                </a>
+
+                <a href="https://uktpagarnusa.my.id/penguji/fisik" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-primary rounded-full flex items-center justify-center text-3xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <span class="font-bold text-lg text-slate-800">Fisik</span>
+                    <p class="text-xs text-slate-400 mt-2">Ketahanan & Kekuatan</p>
+                </a>
+
+                <a href="https://uktpagarnusa.my.id/penguji/senaman&teknik" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-primary rounded-full flex items-center justify-center text-3xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <span class="font-bold text-lg text-slate-800">Senaman & Teknik</span>
+                    <p class="text-xs text-slate-400 mt-2">TK, SD, SMP, SMA & Dasaran (Pukulan, Tendangan, Tangkiasan, Hindaran)</p>
+                </a>
+
+                <a href="https://uktpagarnusa.my.id/penguji/sejarah" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-primary rounded-full flex items-center justify-center text-3xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <span class="font-bold text-lg text-slate-800">Sejarah</span>
+                    <p class="text-xs text-slate-400 mt-2">Wawasan Ke Nu-an, Ke-Bangsaan, Ke-Pagarnusaan dan Ke-Organisasian</p>
+                </a>        
+
+                <a href="https://uktpagarnusa.my.id/penguji/mental" class="group bg-white p-8 rounded-2xl shadow-sm border border-slate-200 flex flex-col items-center hover:border-emerald-500 hover:shadow-xl transition-all duration-300 md:col-span-2 text-center">
+                    <div class="w-16 h-16 bg-emerald-50 text-primary rounded-full flex items-center justify-center text-3xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span class="font-bold text-lg text-slate-800">Mental</span>
+                    <p class="text-xs text-slate-400 mt-2">Ketangguhan & Kesabaran</p>
+                </a>
+            </div>
+        </main>
+
+        <footer class="bg-primary text-white text-center py-4">
+            <p class="text-[10px] md:text-xs opacity-90 tracking-widest uppercase">© 2025 PAGARNUSA UNUSIA. Khusus Penguji.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

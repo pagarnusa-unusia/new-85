@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="description" content="Download logo resmi PSNU PAGARNUSA format PDF, PNG, AI." />
+  <title>Logo PAGARNUSA</title>
+    <link rel="icon" href="../logopn.png">
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #ffffff;
+      --primary: #169a93;
+      --primary-glow: rgba(22, 154, 147, 0.4);
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #f1f5f9;
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      /* Animasi Background Gradient Bergerak */
+      background: linear-gradient(-45deg, #0f172a, #1e293b, #0d2e2c, #0f172a);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100dvh;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Container Utama dengan Efek Glassmorphism */
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 40px 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      
+      /* Animasi Muncul Card */
+      animation: cardEntrance 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      opacity: 0;
+    }
+
+    @keyframes cardEntrance {
+      from { opacity: 0; transform: scale(0.9) translateY(30px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Logo Preview Animasi Mengambang */
+    .logo-box {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 28px;
+      background: white;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .logo-box img {
+      max-width: 100%;
+      filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 35px;
+      line-height: 1.5;
+    }
+
+    /* Download Buttons Staggered Animation */
+    .download-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .btn {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 20px;
+      border-radius: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: none;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Delay per tombol agar muncul bergantian */
+    .btn:nth-child(1) { animation-delay: 0.4s; }
+    .btn:nth-child(2) { animation-delay: 0.5s; }
+    .btn:nth-child(3) { animation-delay: 0.6s; }
+    .btn:nth-child(4) { animation-delay: 0.7s; }
+
+    /* FOKUS PNG - Animasi Denyut */
+    .btn-png {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px var(--primary-glow);
+      z-index: 1;
+    }
+
+    .btn-png::after {
+      content: '';
+      position: absolute;
+      width: 100%; height: 100%;
+      background: white;
+      opacity: 0;
+      top: 0; left: 0;
+      transition: 0.3s;
+    }
+
+    .btn-png:active { transform: scale(0.95); }
+    
+    /* Tombol Secondary */
+    .btn-secondary {
+      background: #f8fafc;
+      color: var(--text-main);
+      border: 1px solid #e2e8f0;
+    }
+
+    .btn-secondary:hover {
+      background: #f1f5f9;
+      transform: translateY(-2px);
+    }
+
+    /* Info & Footer */
+    .file-info {
+      margin-top: 24px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: #f0fdfa;
+      padding: 10px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .contact-link {
+      display: block;
+      margin-top: 25px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: 0.3s;
+    }
+
+    .contact-link:hover { color: var(--primary); }
+
+    footer {
+      margin-top: 30px;
+      font-size: 0.7rem;
+      color: #94a3b8;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 20px;
+    }
+
+    /* Efek Click/Ripple Sederhana */
+    .btn:active::after {
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false">
+
+  <div class="container">
+    <div class="logo-box">
+      <img src="../assets/LOGO PAGARNUSA.png" alt="Logo PSNU Pagar Nusa">
+    </div>
+
+    <h1>Logo Resmi PN</h1>
+    <p class="subtitle">Pusat unduhan aset visual resolusi tinggi PSNU Pagar Nusa.</p>
+
+    <div class="download-grid">
+      <a href="../assets/LOGO PAGARNUSA.PNG" download class="btn btn-png">
+        <span>📥 Download PNG (Umum)</span>
+      </a>
+      
+      <a href="../assets/LOGO PAGARNUSA.pdf" download class="btn btn-secondary">
+        📄 Format PDF (Ready to Print)
+      </a>
+      
+      <a href="../assets/LOGO PAGARNUSA.ai" download class="btn btn-secondary">
+        🎨 Adobe Illustrator (Vektor)
+      </a>
+
+      <a href="../assets/LOGO PAGARNUSA.zip" download class="btn btn-secondary">
+        📦 Download ZIP (Semua)
+      </a>
+    </div>
+
+    <div class="file-info" id="status">
+       ✨ Siap diunduh dalam kualitas HD
+    </div>
+
+    <a href="mailto:pacpagarnusakemang@gmail.com" class="contact-link">
+      Butuh bantuan? Hubungi Admin
+    </a>
+
+    <footer>
+      &copy; 2026 PSNU PAGARNUSA<br>
+      Santri Mengabdi, Bangsa Terlindungi.
+    </footer>
+  </div>
+
+  <script>
+    // Mencegah download gambar via long-press di HP
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('contextmenu', e => e.preventDefault());
+      img.addEventListener('dragstart', e => e.preventDefault());
+    });
+
+    // Animasi sederhana saat tombol diklik
+    document.querySelectorAll('.btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const status = document.getElementById('status');
+        status.textContent = "🚀 Memulai pengunduhan...";
+        setTimeout(() => {
+            status.textContent = "✨ Siap diunduh dalam kualitas HD";
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+
+</html>
+
